@@ -1,9 +1,7 @@
 module Spree
   Product.class_eval do
-    translates :name, :description, :meta_description, :meta_keywords, :slug,
+    translates :name, :description, :meta_description, :meta_keywords,
       fallbacks_for_empty_translations: true
-
-    friendly_id :slug_candidates, use: [:history, :globalize]
 
     include SolidusGlobalize::Translatable
 
@@ -17,16 +15,8 @@ module Spree
       self.default_scopes = []
 
       # Punch slug on every translation to allow reuse of original
-      after_destroy :punch_slug
-
-      def punch_slug
-        update(slug: "#{Time.now.to_i}_#{slug}")
-      end
     end
 
-    # Don't punch slug on original product as it prevents bulk deletion.
-    # Also we don't need it, as it is translated.
-    def punch_slug; end
 
     # Allow to filter products through their translations, too
     def self.like_any(fields, values)
