@@ -1,5 +1,4 @@
 require 'globalize'
-require 'friendly_id/globalize'
 
 module SolidusGlobalize
   class Engine < Rails::Engine
